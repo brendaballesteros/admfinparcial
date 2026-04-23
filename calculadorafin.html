@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B-Finance ULTIMATE | Brenda</title>
+    <style>
+        :root {
+            --bg-color: #FAF8F5;
+            --card-bg: #FFFFFF;
+            --accent-arena: #D9C5B2;
+            --accent-dark: #8C7A6B;
+            --text-main: #4A4036;
+            --text-light: #8C7A6B;
+            --border-radius: 16px;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { font-weight: 300; letter-spacing: 2px; margin: 0; color: var(--text-main); text-transform: uppercase; }
+        .header p { color: var(--text-light); font-size: 13px; margin-top: 5px; }
+        .container { max-width: 650px; width: 100%; }
+        
+        /* Pestañas */
+        .tabs { display: flex; overflow-x: auto; background: var(--card-bg); border-radius: 15px; padding: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 20px; gap: 5px; white-space: nowrap; }
+        .tabs::-webkit-scrollbar { height: 5px; }
+        .tabs::-webkit-scrollbar-thumb { background: var(--accent-arena); border-radius: 10px; }
+        .tab-btn { flex: 1; background: transparent; border: none; padding: 10px 15px; font-size: 12px; color: var(--text-light); cursor: pointer; border-radius: 10px; transition: 0.3s; }
+        .tab-btn.active { background: var(--accent-arena); color: #fff; font-weight: bold; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .calc-card { background: var(--card-bg); border-radius: var(--border-radius); padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); margin-bottom: 20px; border-top: 5px solid var(--accent-arena); }
+        .calc-card h3 { margin-top: 0; color: var(--accent-dark); border-bottom: 1px solid #f8f8f8; padding-bottom: 10px; font-size: 16px; letter-spacing: 1px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 5px; color: var(--text-light); text-transform: uppercase; }
+        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #eee; box-sizing: border-box; background-color: #fafafa; font-size: 13px; }
+        .result-panel { background-color: #fdfaf6; padding: 15px; border-radius: 15px; margin-top: 15px; border-left: 5px solid var(--accent-arena); text-align: center; }
+        .result-panel .title { font-size: 11px; color: var(--text-light); text-transform: uppercase; font-weight: bold; }
+        .result-panel .main-value { display: block; font-size: 22px; font-weight: bold; color: var(--accent-dark); margin: 5px 0; }
+        .result-panel .sub-value { font-size: 12px; color: var(--accent-dark); font-weight: 500; }
+        .fun-explanation { font-size: 12px; color: #9a8a7a; text-align: center; margin-top: 15px; line-height: 1.4; background: #fff; padding: 10px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>B-FINANCE ULTIMATE</h1>
+        <p>La Colección Completa (U1 a U7) ✨</p>
+    </div>
+    <div class="container">
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('u3', this)">U3: Índices</button>
+            <button class="tab-btn" onclick="openTab('u4', this)">U4: Cash Flow</button>
+            <button class="tab-btn" onclick="openTab('c5', this)">C5: Tiempo</button>
+            <button class="tab-btn" onclick="openTab('c67', this)">C6-7: Mercado</button>
+        </div>
+
+        <div id="u3" class="tab-content active">
+            <div class="calc-card">
+                <h3>💧 Liquidez y Solvencia</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Activo Corriente</label><input type="number" id="u3_ac" value="150000" oninput="runU3()"></div>
+                    <div class="input-group"><label>Pasivo Corriente</label><input type="number" id="u3_pc" value="75000" oninput="runU3()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Bienes de Cambio (Stock)</label><input type="number" id="u3_st" value="30000" oninput="runU3()"></div>
+                </div>
+                <div class="result-panel">
+                    <span class="title">Liquidez Corriente</span><span class="main-value" id="resLiq">2.00</span>
+                    <div class="sub-value" id="resSeca">Liquidez Ácida (sin stock): 1.60</div>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h3>👑 Identidad DuPont</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Utilidad Neta</label><input type="number" id="u3_un" value="1821" oninput="runU3()"></div>
+                    <div class="input-group"><label>Ventas Totales</label><input type="number" id="u3_v" value="14679" oninput="runU3()"></div>
+                    <div class="input-group"><label>Activo Total</label><input type="number" id="u3_at" value="11964" oninput="runU3()"></div>
+                    <div class="input-group"><label>Patrimonio Neto</label><input type="number" id="u3_pn" value="6237" oninput="runU3()"></div>
+                </div>
+                <div class="result-panel">
+                    <span class="title">Rentabilidad (ROE)</span><span class="main-value" id="u3_res_roe">29.20%</span>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h3>📅 Ciclo Operativo (Días)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Cuentas a Cobrar</label><input type="number" id="u3_cxc" value="900" oninput="runU3()"></div>
+                    <div class="input-group"><label>Ventas Anuales</label><input type="number" id="u3_va" value="6595" oninput="runU3()"></div>
+                    <div class="input-group"><label>Inventarios</label><input type="number" id="u3_inv" value="18998" oninput="runU3()"></div>
+                    <div class="input-group"><label>Costo (CMV)</label><input type="number" id="u3_cmv" value="4200" oninput="runU3()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Cuentas por Pagar (Proveedores)</label><input type="number" id="u3_cpp" value="650" oninput="runU3()"></div>
+                </div>
+                <div class="result-panel">
+                    <span class="title">Tiempos del Negocio</span>
+                    <span class="main-value" id="u3_res_cob">Cobranza: 49.81 días</span>
+                    <div class="sub-value" id="u3_res_pago">Stock: 1651.02 días | Pago: 56.49 días</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="u4" class="tab-content">
+            <div class="calc-card">
+                <h3>🌊 Cash Flow Total (FCF y Accionista)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>EBIT</label><input type="number" id="u4_ebit" value="50" oninput="runU4()"></div>
+                    <div class="input-group"><label>Depreciación (+)</label><input type="number" id="u4_dep" value="6" oninput="runU4()"></div>
+                    <div class="input-group"><label>Impuestos (-)</label><input type="number" id="u4_tax" value="20" oninput="runU4()"></div>
+                    <div class="input-group"><label>Var. Cap. Trab (-)</label><input type="number" id="u4_wcap" value="5" oninput="runU4()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Inversiones / CAPEX (-)</label><input type="number" id="u4_capex" value="10" oninput="runU4()"></div>
+                </div>
+                <div class="result-panel" style="margin-bottom: 15px;">
+                    <span class="title">Free Cash Flow (De la Empresa)</span>
+                    <span class="main-value" id="u4_res_fcf">$21.00</span>
+                </div>
+                
+                <h4 style="margin: 20px 0 10px; color: var(--accent-dark); font-size: 13px;">AJUSTES BANCARIOS:</h4>
+                <div class="grid">
+                    <div class="input-group"><label>Intereses Pagados (-)</label><input type="number" id="u4_int" value="5" oninput="runU4()"></div>
+                    <div class="input-group"><label>Ahorro Fiscal (+)</label><input type="number" id="u4_aho" value="2" oninput="runU4()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Nuevos Préstamos (+)</label><input type="number" id="u4_pres" value="0" oninput="runU4()"></div>
+                </div>
+                <div class="result-panel">
+                    <span class="title">Cash Flow del Accionista (Bolsillo)</span>
+                    <span class="main-value" id="u4_res_cfa">$18.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="c5" class="tab-content">
+            <div class="calc-card">
+                <h3>🕰️ Valor Presente y Futuro</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Monto</label><input type="number" id="c5_m2" value="10000" oninput="runC5()"></div>
+                    <div class="input-group"><label>Tasa Anual (%)</label><input type="number" id="c5_i2" value="6" oninput="runC5()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Años</label><input type="number" id="c5_n2" value="12" oninput="runC5()"></div>
+                </div>
+                <div class="result-panel">
+                    <span class="title">Si ahorrás hoy...</span><span class="main-value" id="c5_res_vf">Valor Futuro: $20,121.96</span>
+                    <span class="title" style="margin-top:10px;">Si te lo prometen mañana...</span><span class="main-value" id="c5_res_vp">Valor Presente: $4,969.69</span>
+                </div>
+            </div>
+
+            <div class="calc-card">
+                <h3>💸 Cuota de Préstamo (Sistema Francés)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Préstamo ($)</label><input type="number" id="c5_p" value="50000" oninput="runC5()"></div>
+                    <div class="input-group"><label>Tasa (%)</label><input type="number" id="c5_t" value="0.75" oninput="runC5()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Cant. Cuotas</label><input type="number" id="c5_n" value="120" oninput="runC5()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Cuota Fija Mensual</span><span class="main-value" id="c5_res_cuota">$633.38</span></div>
+            </div>
+
+            <div class="calc-card">
+                <h3>🔮 Renta Perpetua</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Mensualidad Deseada ($)</label><input type="number" id="c5_renta" value="150000" oninput="runC5()"></div>
+                    <div class="input-group"><label>Tasa (%)</label><input type="number" id="c5_t_renta" value="10" oninput="runC5()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Necesitás invertir hoy</span><span class="main-value" id="c5_res_perp">$1,500,000.00</span></div>
+                <p class="fun-explanation">🏖️ <b>Modo Recreo:</b> Si querés 150 mil pesos por mes toda tu vida sin trabajar, ¡esa es la plata que tenés que poner hoy en el banco!</p>
+            </div>
+        </div>
+
+        <div id="c67" class="tab-content">
+            <div class="calc-card">
+                <h3>💎 Valuación Gordon (Acciones)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Dividendo (D1)</label><input type="number" id="c6_d1" value="10" oninput="runC67()"></div>
+                    <div class="input-group"><label>Rendimiento (k) (%)</label><input type="number" id="c6_k" value="10" oninput="runC67()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Crecimiento (g) (%)</label><input type="number" id="c6_g" value="5" oninput="runC67()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Precio Justo Acción</span><span class="main-value" id="c6_res_gordon">$200.00</span></div>
+            </div>
+
+            <div class="calc-card">
+                <h3>📈 Múltiplos (PER)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Precio Acción</label><input type="number" id="c6_pa" value="24" oninput="runC67()"></div>
+                    <div class="input-group"><label>Ganancia (EPS)</label><input type="number" id="c6_eps" value="2.40" oninput="runC67()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Price Earning Ratio (PER)</span><span class="main-value" id="c6_res_per">10.00</span></div>
+            </div>
+            
+            <div class="calc-card">
+                <h3>⚖️ Rendimiento de Cartera (2 Activos)</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Rendimiento A (%)</label><input type="number" id="c7_ra" value="10" oninput="runC67()"></div>
+                    <div class="input-group"><label>Peso A (%)</label><input type="number" id="c7_wa" value="40" oninput="runC67()"></div>
+                    <div class="input-group"><label>Rendimiento B (%)</label><input type="number" id="c7_rb" value="15" oninput="runC67()"></div>
+                    <div class="input-group"><label>Peso B (%)</label><input type="number" id="c7_wb" value="60" oninput="runC67()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Rendimiento Total</span><span class="main-value" id="c7_res_cart">13.00%</span></div>
+            </div>
+
+            <div class="calc-card">
+                <h3>🛹 Riesgo CAPM</h3>
+                <div class="grid">
+                    <div class="input-group"><label>Tasa s/ Riesgo (%)</label><input type="number" id="c7_rf" value="5" oninput="runC67()"></div>
+                    <div class="input-group"><label>Mercado (%)</label><input type="number" id="c7_rm" value="12" oninput="runC67()"></div>
+                    <div class="input-group" style="grid-column: span 2;"><label>Beta</label><input type="number" id="c7_b" value="1.2" oninput="runC67()"></div>
+                </div>
+                <div class="result-panel"><span class="title">Rendimiento Exigido</span><span class="main-value" id="c7_res_k">13.40%</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Arreglado el problema del clic para compus locales
+        function openTab(id, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+        }
+        
+        function n(id) { return parseFloat(document.getElementById(id).value) || 0; }
+        // Seguro para formato de números
+        function f(v) { return (isNaN(v) ? 0 : v).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+
+        function runU3() {
+            let ac=n('u3_ac'), pc=n('u3_pc'), st=n('u3_st');
+            document.getElementById('resLiq').innerText = pc>0 ? (ac/pc).toFixed(2) : "0.00";
+            document.getElementById('resSeca').innerText = "Liquidez Ácida (sin stock): " + (pc>0 ? ((ac-st)/pc).toFixed(2) : "0.00");
+
+            let un=n('u3_un'), v=n('u3_v'), at=n('u3_at'), pn=n('u3_pn');
+            document.getElementById('u3_res_roe').innerText = v>0 && at>0 && pn>0 ? ((un/v)*(v/at)*(at/pn)*100).toFixed(2) + "%" : "0.00%";
+            
+            let cxc=n('u3_cxc'), va=n('u3_va'), inv=n('u3_inv'), cmv=n('u3_cmv'), cpp=n('u3_cpp');
+            document.getElementById('u3_res_cob').innerText = "Cobranza: " + (va>0 ? (cxc/va*365).toFixed(2) : "0.00") + " días";
+            document.getElementById('u3_res_pago').innerText = `Stock: ${cmv>0 ? (inv/cmv*365).toFixed(2) : "0.00"} días | Pago: ${cmv>0 ? (cpp/cmv*365).toFixed(2) : "0.00"} días`;
+        }
+        
+        function runU4() {
+            let fcf = n('u4_ebit')+n('u4_dep')-n('u4_tax')-n('u4_wcap')-n('u4_capex');
+            let cfa = fcf - n('u4_int') + n('u4_aho') + n('u4_pres');
+            document.getElementById('u4_res_fcf').innerText = "$" + f(fcf);
+            document.getElementById('u4_res_cfa').innerText = "$" + f(cfa);
+        }
+        
+        function runC5() {
+            let m=n('c5_m2'), i=n('c5_i2')/100, an=n('c5_n2');
+            document.getElementById('c5_res_vf').innerText = "Valor Futuro: $" + f(m * Math.pow(1+i, an));
+            document.getElementById('c5_res_vp').innerText = "Valor Presente: $" + f(m / Math.pow(1+i, an));
+
+            let p=n('c5_p'), t=n('c5_t')/100, mes=n('c5_n');
+            let cuota = t>0 ? p * (t * Math.pow(1+t, mes)) / (Math.pow(1+t, mes) - 1) : p/mes;
+            document.getElementById('c5_res_cuota').innerText = "$" + f(cuota);
+
+            let renta = n('c5_renta'), t_renta = n('c5_t_renta')/100;
+            document.getElementById('c5_res_perp').innerText = "$" + f(t_renta > 0 ? renta / t_renta : 0);
+        }
+        
+        function runC67() {
+            let d1=n('c6_d1'), kg=n('c6_k')/100, g=n('c6_g')/100;
+            document.getElementById('c6_res_gordon').innerText = "$" + f(kg>g ? d1/(kg-g) : 0);
+
+            let pa=n('c6_pa'), eps=n('c6_eps');
+            document.getElementById('c6_res_per').innerText = eps>0 ? (pa/eps).toFixed(2) : "0.00";
+
+            let ra=n('c7_ra'), wa=n('c7_wa')/100, rb=n('c7_rb'), wb=n('c7_wb')/100;
+            document.getElementById('c7_res_cart').innerText = ((ra*wa) + (rb*wb)).toFixed(2) + "%";
+
+            let rf=n('c7_rf'), rm=n('c7_rm'), b=n('c7_b');
+            document.getElementById('c7_res_k').innerText = (rf + b*(rm-rf)).toFixed(2) + "%";
+        }
+        
+        // Arrancar todos los cálculos
+        runU3(); runU4(); runC5(); runC67();
+    </script>
+</body>
+</html>
